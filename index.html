@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Eventbrite Map Finder</title>
+  <!-- load the bootstrap stylesheet -->
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="css/style.css"/>
+  <!-- load the libraries we need -->
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.3/zepto.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=latin,latin-ext">
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <!-- load our scripts -->
+  
+  <!--router -->
+  <script type="text/javascript" src="js/routers/router.js"></script>
+
+  <!-- models -->
+  <script type="text/javascript" src="js/models/topic_model.js"></script>
+  <script type="text/javascript" src="js/models/event_model.js"></script>
+  <script type="text/javascript" src="js/models/location_model.js"></script>
+
+  <!-- views -->
+  <script type="text/javascript" src="js/views/topic_row.js"></script>
+  <script type="text/javascript" src="js/views/topic_index.js"></script>
+  <script type="text/javascript" src="js/views/event_row.js"></script>
+  <script type="text/javascript" src="js/views/event_index.js"></script>
+  <script type="text/javascript" src="js/views/marker_view.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="page-header">
+      <h2><b>Event Finder!</b></h2>
+      <h3 class="lead">
+        This small web application allows you to locate Eventbrite locations within the visible bounds of the map. <br>
+      </h3>
+      <p>
+        1. Navigate the map to your area of interest. <br>
+        2. Select your event category of choice. <br>
+        3. Click on the list of events to view the Eventbrite webpage, or locate it on the map! <br>
+      </p>
+    </div>
+    <div class="row col-md-3">
+      <table>
+        <tr><td><a href="#/events/setFree" id= "toggle_price" class="delete btn btn-danger btn-small">All Events</a><td></tr>
+        <tr><td>
+          <div id="topic_list"></div>
+        </td></tr>
+      </table>
+    </div>
+    <div class="map_div col-md-6" id="map_canvas"></div>
+    <div class="col-md-3">
+      <img id="loader_image" src="http://webtools.tyndale.com/GLOBAL_IMG/Loading_bar.gif">
+      <div class="event_row" id="eventlist"></div>
+    </div>
+  </div>
+
+  <!-- the topic row container -->
+  <script type="text/template" id="TopicTemplate">
+    <table class="topic_table table">
+      <thead>
+        <tr>
+          <th>Event Category</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </script>
+
+   <!-- the event row container -->
+  <script type="text/template" id="EventTemplate">
+    <table class="event_table table table-striped">
+      <thead>
+        <tr>
+          <th>Locate</th>
+          <th>Event</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </script>
+
+  <!-- the topic row template -->
+  <script type="text/template" id="TopicRowTemplate">
+    <td>
+      <a class="search" href="#topic/<%= id %>/search"><%= name %></a>
+    </td>
+  </script>
+
+  <!-- the event row template, rendered once events are fetched-->
+  <script type="text/template" id="EventRowTemplate">
+    <td><a href="#events/<%= venue_id %>/locate"><img class="event_icon" src=<%= logo.get("url") %>></a></td>
+    <td><a href="<%= url %>"><%= name.text %></a></td>
+  </script>
+
+  <script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
